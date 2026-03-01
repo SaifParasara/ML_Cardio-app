@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardio AI | {% block title %}{% endblock %}</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <a href="{{ url_for('home') }}" class="nav-brand">
+                <i class="fa-solid fa-heart-pulse"></i> Cardio AI
+            </a>
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}"
+                    class="nav-link {% if request.endpoint == 'home' %}active{% endif %}">Home</a>
+                <a href="{{ url_for('about') }}"
+                    class="nav-link {% if request.endpoint == 'about' %}active{% endif %}">Models Info</a>
+                <a href="{{ url_for('evaluation') }}"
+                    class="nav-link {% if request.endpoint == 'evaluation' %}active{% endif %}">Metrics</a>
+
+                <!-- Theme Toggle Button -->
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+
+                <a href="{{ url_for('predict_page') }}" class="btn-primary" style="margin-left: 0.5rem;">Run
+                    Prediction</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+
+    <!-- Disclaimer Modal -->
+    <div id="disclaimerModal" class="modal-overlay">
+        <div class="modal-content card animate-up">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-triangle-exclamation text-danger"></i> Important Medical Disclaimer</h2>
+            </div>
+            <div class="modal-body">
+                <p>This is an <strong>AI-based educational application</strong> designed for demonstrating machine
+                    learning capabilities.</p>
+                <p>It is <strong>not intended</strong> to be a substitute for professional medical advice, diagnosis, or
+                    treatment.</p>
+                <p>Always seek the advice of your physician or other qualified health provider with any questions you
+                    may have regarding a medical condition.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="acceptDisclaimerBtn" class="btn-primary">I Understand & Agree</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="animate-up" style="animation-delay: 0.1s;">
+        <p>&copy; 2024 Cardio AI Platform | Clinical Neural Decision System</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        // Inline script to prevent theme flashing on load
+        (function () {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+</body>
+
+</html>

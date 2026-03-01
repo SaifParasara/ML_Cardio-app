@@ -1,0 +1,209 @@
+{% extends "layout.html" %}
+
+{% block title %}About Models{% endblock %}
+
+{% block content %}
+<style>
+    .about-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .models-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        margin-bottom: 4rem;
+    }
+
+    .model-card {
+        padding: 2.5rem;
+        display: flex;
+        flex-direction: column;
+        border-top: 4px solid var(--border);
+    }
+
+    .model-card.featured {
+        border-top-color: var(--primary);
+    }
+
+    .model-icon {
+        font-size: 2.5rem;
+        color: var(--text-muted);
+        margin-bottom: 1.5rem;
+    }
+
+    .model-card.featured .model-icon {
+        color: var(--primary);
+    }
+
+    .model-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .model-desc {
+        color: var(--text-muted);
+        line-height: 1.6;
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+        flex: 1;
+    }
+
+    .model-pros {
+        background: var(--bg-light);
+        padding: 1.25rem;
+        border-radius: 8px;
+        margin-top: auto;
+    }
+
+    .model-card.featured .model-pros {
+        background: rgba(139, 92, 246, 0.1);
+        border: 1px solid var(--primary);
+    }
+
+    .model-pros h4 {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.75rem;
+        color: var(--text-heading);
+    }
+
+    .model-pros ul {
+        list-style-position: outside;
+        margin-left: 1rem;
+        color: var(--text-main);
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .model-pros li {
+        margin-bottom: 0.25rem;
+    }
+
+    .badge {
+        display: inline-block;
+        background: var(--primary);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+</style>
+
+<div class="about-header animate-up">
+    <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Machine Learning Architecture</h1>
+    <p style="color: var(--text-muted); max-width: 700px; margin: 0 auto; line-height: 1.6;">An overview of the
+        analytical pipelines built for cardiovascular risk assessment. While three distinct architectures were
+        evaluated, building predictions across 14 input vectors requires a sophisticated model robust to complex
+        collinearity.</p>
+</div>
+
+<div class="models-grid">
+    <!-- Gradient Boosting (Best) -->
+    <div class="card model-card featured animate-up" style="animation-delay: 0.1s;">
+        <div>
+            <span class="badge"><i class="fa-solid fa-check"></i> Activated Core Engine</span>
+        </div>
+        <i class="fa-solid fa-layer-group model-icon"></i>
+        <h3 class="model-title">Gradient Boosting Ensemble</h3>
+        <p class="model-desc">
+            A state-of-the-art technique utilizing sequential decision trees. By rigorously fitting each consecutive
+            tree to minimize the residual errors of the prior iteration, the final algorithmic output achieves superb
+            classification boundaries.
+        </p>
+        <div class="model-pros">
+            <h4>Primary Advantages</h4>
+            <ul>
+                <li>Exceptionally robust on multidimensional tabular datasets</li>
+                <li>Naturally resilient directly against non-linear interactions</li>
+                <li>Low variance compared to singular decision trees</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Random Forest / Decision Tree -->
+    <div class="card model-card animate-up" style="animation-delay: 0.2s;">
+        <i class="fa-solid fa-network-wired model-icon"></i>
+        <h3 class="model-title">Standard Decision Tree</h3>
+        <p class="model-desc">
+            A fundamental model that iteratively splits data parameters along axes of maximum variance reduction,
+            constructing a highly legible flowchart architecture of logic nodes.
+        </p>
+        <div class="model-pros">
+            <h4>Characteristics</h4>
+            <ul>
+                <li>High interpretability and visual transparency</li>
+                <li>Extremely rapid inference speed</li>
+                <li>Susceptible to terminal leaf overfitting</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Logistic Regression -->
+    <div class="card model-card animate-up" style="animation-delay: 0.3s;">
+        <i class="fa-solid fa-chart-line model-icon"></i>
+        <h3 class="model-title">Logistic Regression</h3>
+        <p class="model-desc">
+            A reliable baseline statistical blueprint calculating probabilities utilizing the sigmoid function over
+            cross-multiplied dataset feature matrices.
+        </p>
+        <div class="model-pros">
+            <h4>Characteristics</h4>
+            <ul>
+                <li>Excellent established baseline algorithm</li>
+                <li>Direct coefficient impact transparency</li>
+                <li>Limited scaling against complex data relationships</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="about-header animate-up" style="margin-top: 5rem; animation-delay: 0.4s;">
+    <h2 style="font-size: 2.25rem; margin-bottom: 1rem;">Training Dataset & Backend Pipeline</h2>
+    <p style="color: var(--text-muted); max-width: 800px; margin: 0 auto; line-height: 1.6;">
+        Our predictive intelligence is built on an extensive clinical dataset composing of over <strong>70,000 diverse
+            patient records</strong>. Each entry tracks 14 distinct physiological attributes—providing a deep metric
+        foundation for drawing correlations in cardiovascular health.
+    </p>
+</div>
+
+<div class="card model-card animate-up"
+    style="margin-bottom: 4rem; animation-delay: 0.5s; padding: 2.5rem; border-top-color: var(--secondary);">
+    <h3 style="font-size: 1.35rem; margin-bottom: 2rem; color: var(--text-heading);"><i
+            class="fa-solid fa-server me-2 text-primary"></i> Real-time Inference Architecture</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2.5rem;">
+        <div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 0.75rem; color: var(--text-heading);"><i
+                    class="fa-solid fa-arrow-right-to-bracket text-primary" style="margin-right: 8px;"></i> 1. Secure
+                Data Ingestion</h4>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">Raw numerical constraints (such
+                as age, height, and blood pressure) are transmitted from the user interface directly to the Python Flask
+                backend logic, undergoing strict type-safety checks.</p>
+        </div>
+        <div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 0.75rem; color: var(--text-heading);"><i
+                    class="fa-solid fa-scale-balanced text-primary" style="margin-right: 8px;"></i> 2. Dynamic
+                Standardization</h4>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">The data is passed through a
+                pre-fitted <code>StandardScaler</code> constructed synchronously during original model training. This
+                ensures extreme metric variances are mathematically normalized to prevent algorithmic bias.</p>
+        </div>
+        <div>
+            <h4 style="font-size: 1.1rem; margin-bottom: 0.75rem; color: var(--text-heading);"><i
+                    class="fa-solid fa-microchip text-primary" style="margin-right: 8px;"></i> 3. Algorithmic Inference
+            </h4>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">The fully constructed
+                14-dimensional feature vector is processed by the loaded Gradient Boosting Core
+                (<code>RF_model.pkl</code>). The ensemble resolves probability bounds in milliseconds and returns the
+                diagnostic classification.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

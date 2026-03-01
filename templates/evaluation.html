@@ -1,0 +1,240 @@
+{% extends "layout.html" %}
+
+{% block title %}Evaluation Metrics{% endblock %}
+
+{% block content %}
+<style>
+    .metrics-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .stat-card {
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .stat-circle {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        background: var(--bg-card);
+        color: var(--primary);
+        border: 4px solid var(--border);
+        position: relative;
+    }
+
+    .stat-card:nth-child(1) .stat-circle {
+        border-color: var(--primary);
+        color: var(--primary);
+    }
+
+    .stat-card:nth-child(2) .stat-circle {
+        border-color: var(--accent);
+        color: var(--accent);
+    }
+
+    .stat-card:nth-child(3) .stat-circle {
+        border-color: var(--warning);
+        color: var(--warning);
+    }
+
+    .stat-card:nth-child(4) .stat-circle {
+        border-color: #8b5cf6;
+        color: #8b5cf6;
+    }
+
+    .stat-title {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-desc {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        line-height: 1.4;
+    }
+
+    /* Confusion Matrix */
+    .cm-wrapper {
+        padding: 3rem;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .cm-grid {
+        display: grid;
+        grid-template-columns: 120px 1fr 1fr;
+        grid-template-rows: 60px 1fr 1fr;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .cm-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+
+    .cm-cell {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .c-tn {
+        background: var(--success-bg);
+        border-color: var(--success-border);
+    }
+
+    .c-fp {
+        background: var(--danger-bg);
+        border-color: var(--danger-border);
+    }
+
+    .c-fn {
+        background: var(--danger-bg);
+        border-color: var(--danger-border);
+    }
+
+    .c-tp {
+        background: var(--success-bg);
+        border-color: var(--success-border);
+    }
+
+    .cm-val {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-heading);
+    }
+
+    .cm-label {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-top: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .alert-info {
+        background-color: rgba(139, 92, 246, 0.1);
+        border: 1px solid var(--primary);
+        color: var(--text-heading);
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        font-size: 0.9rem;
+        margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+        .cm-grid {
+            grid-template-columns: 80px 1fr 1fr;
+            grid-template-rows: 60px 1fr 1fr;
+        }
+
+        .cm-val {
+            font-size: 1.5rem;
+        }
+
+        .cm-wrapper {
+            padding: 1.5rem;
+        }
+    }
+</style>
+
+<div class="metrics-header animate-up">
+    <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Model Performance Output</h1>
+    <p style="color: var(--text-muted);">Simulated benchmark metric aggregation for the primary Gradient Boosting
+        predictive framework.</p>
+</div>
+
+<div class="stats-grid">
+    <div class="card stat-card animate-up" style="animation-delay: 0.1s;">
+        <div class="stat-circle">74%</div>
+        <h3 class="stat-title">System Accuracy</h3>
+        <p class="stat-desc">Complete ratio of accurate predictions across the entire sample set.</p>
+    </div>
+
+    <div class="card stat-card animate-up" style="animation-delay: 0.2s;">
+        <div class="stat-circle">71%</div>
+        <h3 class="stat-title">Precision Index</h3>
+        <p class="stat-desc">Ratio pointing to actual risk density against total positive claims.</p>
+    </div>
+
+    <div class="card stat-card animate-up" style="animation-delay: 0.3s;">
+        <div class="stat-circle">75%</div>
+        <h3 class="stat-title">Recall Value</h3>
+        <p class="stat-desc">Measurement marking the true positive identification capacity.</p>
+    </div>
+
+    <div class="card stat-card animate-up" style="animation-delay: 0.4s;">
+        <div class="stat-circle">73%</div>
+        <h3 class="stat-title">F1 Composite</h3>
+        <p class="stat-desc">The algorithmic harmonic mean calculation of Precision vs Recall.</p>
+    </div>
+</div>
+
+<div class="card cm-wrapper animate-up" style="animation-delay: 0.5s;">
+    <h2 style="text-align: center; margin-bottom: 2rem; font-size: 1.25rem;">Classification Result Matrix</h2>
+
+    <div class="cm-grid">
+        <div></div>
+        <div class="cm-header">Predicted Low Risk</div>
+        <div class="cm-header">Predicted High Risk</div>
+
+        <div class="cm-header" style="writing-mode: vertical-rl; transform: rotate(180deg);">Actual Low Risk</div>
+        <div class="cm-cell c-tn">
+            <span class="cm-val m-val">25,842</span>
+            <span class="cm-label">True Negative</span>
+        </div>
+        <div class="cm-cell c-fp">
+            <span class="cm-val m-val">9,179</span>
+            <span class="cm-label">False Positive</span>
+        </div>
+
+        <div class="cm-header" style="writing-mode: vertical-rl; transform: rotate(180deg);">Actual High Risk</div>
+        <div class="cm-cell c-fn">
+            <span class="cm-val m-val">9,641</span>
+            <span class="cm-label">False Negative</span>
+        </div>
+        <div class="cm-cell c-tp">
+            <span class="cm-val m-val">25,338</span>
+            <span class="cm-label">True Positive</span>
+        </div>
+    </div>
+
+    <div class="alert-info">
+        <i class="fa-solid fa-circle-info" style="font-size: 1.5rem;"></i>
+        <p><strong>Clinical Note:</strong> Measurements pictured operate under synthetic testing parameters
+            representative of typical Gradient Boosting performance curves on comparable historical datasets. Real world
+            application requires persistent secondary monitoring.</p>
+    </div>
+</div>
+{% endblock %}

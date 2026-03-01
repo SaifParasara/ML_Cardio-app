@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5 animate-in">
+        <h2 class="fw-bold">The Science <span style="color:var(--primary-red)">Behind</span> The AI</h2>
+        <p class="text-muted">Understanding how our Logistic Regression model predicts heart disease.</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Main Theory Card -->
+            <div class="white-card p-5 mb-5 animate-in delay-1 position-relative overflow-hidden">
+                <div class="position-absolute top-0 end-0 p-4 opacity-10">
+                    <i class="fas fa-atom fa-10x text-primary"></i>
+                </div>
+
+                <div class="row align-items-center position-relative z-index-1">
+                    <div class="col-lg-7">
+                        <h4 class="fw-bold mb-4 text-primary"><i class="fas fa-wave-square me-2"></i>The Sigmoid
+                            Activation</h4>
+                        <p class="text-muted mb-4">
+                            At the core of our prediction engine is the <strong>Sigmoid Function</strong>. This
+                            mathematical curve maps any input value (derived from your health metrics) to a probability
+                            between 0 and 1.
+                        </p>
+                        <div class="bg-light p-4 rounded-3 border mb-4 text-center">
+                            <p class="mb-0 font-monospace fs-5 text-dark fw-bold">$$ P(y=1|x) = \frac{1}{1 + e^{-z}} $$
+                            </p>
+                            <small class="text-muted d-block mt-2">Where $z$ is the weighted sum of your inputs ($w
+                                \cdot x + b$)</small>
+                        </div>
+                        <p class="text-muted small">
+                            If the resulting probability $P$ is greater than 0.5 (or a custom threshold for higher
+                            recall), the model classifies the risk as "High".
+                        </p>
+                    </div>
+                    <div class="col-lg-5 text-center">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/640px-Logistic-curve.svg.png"
+                            alt="Sigmoid Function" class="img-fluid rounded shadow-sm bg-white p-2 border">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4 animate-in delay-2">
+                <div class="col-md-6">
+                    <div class="white-card h-100 border-0 shadow-hover">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-danger bg-opacity-10 p-2 rounded-3 me-3">
+                                <i class="fas fa-balance-scale text-danger fa-lg"></i>
+                            </div>
+                            <h5 class="fw-bold mb-0">Bias-Variance Tradeoff</h5>
+                        </div>
+                        <p class="text-muted small">
+                            Our Logistic Regression model is designed as a high-bias, low-variance classifier. This
+                            makes it robust against overfitting, meaning it generalizes well to new patients rather than
+                            memorizing noise in the training data.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="white-card h-100 border-0 shadow-hover">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-success bg-opacity-10 p-2 rounded-3 me-3">
+                                <i class="fas fa-weight-hanging text-success fa-lg"></i>
+                            </div>
+                            <h5 class="fw-bold mb-0">Feature Importance</h5>
+                        </div>
+                        <p class="text-muted small">
+                            The model assigns different "weights" to each factor. Clinical analysis shows that
+                            <strong>Systolic Blood Pressure</strong> and <strong>Age</strong> carry the highest
+                            coefficients, significantly influencing the final risk score.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-5 animate-in delay-3">
+                <a href="/analysis" class="btn btn-outline-secondary rounded-pill px-4">
+                    View Performance Metrics <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MathJax for rendering equations if needed, though simple HTML/CSS is often enough for simple formulas -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+{% endblock %}

@@ -1,0 +1,304 @@
+{% extends "layout.html" %}
+
+{% block title %}Predict Health{% endblock %}
+
+{% block content %}
+<style>
+    .layout-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        align-items: start;
+        margin-top: 1rem;
+    }
+
+    .form-panel {
+        padding: 2rem;
+    }
+
+    .results-panel {
+        padding: 2rem;
+        background-color: var(--bg-light);
+        border: 1px solid var(--border);
+        position: sticky;
+        top: 6rem;
+    }
+
+    .section-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 1.25rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--border);
+        color: var(--text-heading);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .section-title i {
+        color: var(--primary);
+    }
+
+    .input-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem;
+    }
+
+    .lifestyle-grid {
+        display: flex;
+        gap: 1.5rem;
+        background: var(--bg-light);
+        padding: 1.25rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+    }
+
+    /* Result Specific Styles */
+    .result-alert {
+        padding: 1.5rem;
+        border-radius: 8px;
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .result-high {
+        background-color: var(--danger-bg);
+        border: 1px solid var(--danger-border);
+        color: var(--danger-text);
+    }
+
+    .result-low {
+        background-color: var(--success-bg);
+        border: 1px solid var(--success-border);
+        color: var(--success-text);
+    }
+
+    .result-icon {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .summary-list {
+        list-style: none;
+        margin-top: 1rem;
+    }
+
+    .summary-list li {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.9rem;
+    }
+
+    .summary-list li span:first-child {
+        color: var(--text-muted);
+    }
+
+    .summary-list li span:last-child {
+        font-weight: 500;
+        color: var(--text-heading);
+    }
+
+    .error-box {
+        background-color: var(--danger-bg);
+        border: 1px solid var(--danger-border);
+        color: var(--danger-text);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+        .layout-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .input-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .lifestyle-grid {
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+    }
+</style>
+
+<div class="animate-up" style="margin-bottom: 2rem;">
+    <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">Diagnostic Data Entry</h1>
+    <p style="color: var(--text-muted);">Please provide patient clinical parameters to run the predictive algorithm.</p>
+</div>
+
+<div class="layout-grid">
+    <!-- Form Panel -->
+    <div class="card form-panel animate-up" style="animation-delay: 0.2s;">
+        <form action="{{ url_for('predict') }}" method="POST">
+
+            <h3 class="section-title"><i class="fa-solid fa-address-card"></i> Patient Demographics</h3>
+            <div class="input-grid">
+                <div class="form-group">
+                    <label class="form-label" for="name">Patient Name/ID</label>
+                    <input type="text" id="name" name="name" class="form-control" required placeholder="E.g. JD-192">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="age">Age</label>
+                    <input type="number" id="age" name="age" class="form-control" required placeholder="E.g. 35">
+                    <small
+                        style="color:var(--text-muted); font-size: 0.8rem; margin-top: 4px; display:inline-block;"></small>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="gender">Gender</label>
+                    <select id="gender" name="gender" class="form-select" required>
+                        <option value="2">Male </option>
+                        <option value="1">Female </option>
+
+                    </select>
+                </div>
+            </div>
+
+            <h3 class="section-title" style="margin-top: 1.5rem;"><i class="fa-solid fa-file-medical"></i> Vitals & Lab
+                Results</h3>
+            <div class="input-grid">
+                <div class="form-group">
+                    <label class="form-label" for="height">Height (cm)</label>
+                    <input type="number" id="height" name="height" class="form-control" required placeholder="170"
+                        step="0.1">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="weight">Weight (kg)</label>
+                    <input type="number" id="weight" name="weight" class="form-control" required placeholder="70"
+                        step="0.1">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="ap_hi">Systolic BP</label>
+                    <input type="number" id="ap_hi" name="ap_hi" class="form-control" required placeholder="120">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="ap_lo">Diastolic BP</label>
+                    <input type="number" id="ap_lo" name="ap_lo" class="form-control" required placeholder="80">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="chol">Cholesterol Level</label>
+                    <select id="chol" name="chol" class="form-select" required>
+                        <option value="1">1: Normal</option>
+                        <option value="2">2: Above Normal</option>
+                        <option value="3">3: Well Above Normal</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="gluc">Glucose Level</label>
+                    <select id="gluc" name="gluc" class="form-select" required>
+                        <option value="1">1: Normal</option>
+                        <option value="2">2: Above Normal</option>
+                        <option value="3">3: Well Above Normal</option>
+                    </select>
+                </div>
+            </div>
+
+            <h3 class="section-title" style="margin-top: 1.5rem;"><i class="fa-solid fa-person-running"></i> Lifestyle
+                Factors</h3>
+            <div class="form-group">
+                <div class="lifestyle-grid">
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="smoke" name="smoke" value="1">
+                        <label for="smoke">Smoker</label>
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="alco" name="alco" value="1">
+                        <label for="alco">Consumes Alcohol</label>
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="active" name="active" value="1" checked>
+                        <label for="active">Physically Active</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-primary"
+                style="width: 100%; padding: 1rem; font-size: 1.05rem; margin-top: 1rem;">
+                <i class="fa-solid fa-microchip"></i> Run Prediction Model
+            </button>
+        </form>
+    </div>
+
+    <!-- Results Panel -->
+    <div class="card results-panel animate-up" style="animation-delay: 0.4s;">
+        <h3
+            style="font-size: 1rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 1.5rem; text-align: center;">
+            Diagnostic Report</h3>
+
+        {% if error %}
+        <div class="error-box">
+            <i class="fa-solid fa-circle-exclamation" style="margin-right: 8px;"></i> System Error: {{ error }}
+        </div>
+        {% endif %}
+
+        {% if prediction is defined %}
+        {% if prediction == 1 %}
+        <div class="result-alert result-high">
+            <div class="result-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Elevated Risk</h2>
+            <p style="font-size: 0.9rem;">Model detected patterns consistent with cardiovascular disease risk.</p>
+        </div>
+        {% else %}
+        <div class="result-alert result-low">
+            <div class="result-icon"><i class="fa-solid fa-shield-check"></i></div>
+            <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Low Risk</h2>
+            <p style="font-size: 0.9rem;">Model detected patterns consistent with healthy baseline parameters.</p>
+        </div>
+        {% endif %}
+
+        {% if summary %}
+        <h4 style="margin-top: 1.5rem; font-size: 1rem;">Patient Summary</h4>
+        <ul class="summary-list">
+            <li><span>Name/ID</span> <span>{{ summary.get('Patient Name') }}</span></li>
+            <li><span>Age</span> <span>{{ summary.get('Age') }}</span></li>
+            <li><span>Gender</span> <span>{{ summary.get('Gender') }}</span></li>
+            <li><span>BMI Computed</span> <span>{{ summary.get('BMI') }}</span></li>
+            <li><span>Blood Pressure</span> <span>{{ summary.get('Blood Pressure') }}</span></li>
+            <li><span>Cholesterol</span> <span>{{ summary.get('Cholesterol') }}</span></li>
+            <li><span>Glucose</span> <span>{{ summary.get('Glucose') }}</span></li>
+            <li><span>Traits</span> <span style="text-align: right;">{{ summary.get('Lifestyle') }}</span></li>
+        </ul>
+        <p style="text-align: center; color: var(--text-muted); font-size: 0.75rem; margin-top: 1.5rem;">
+            Generated at: {{ now }}
+        </p>
+
+        {% if prediction == 1 %}
+        <div class="alert-info"
+            style="margin-top: 1.5rem; background-color: rgba(245, 158, 11, 0.1); border-color: #f59e0b; color: var(--text-heading); font-size: 0.85rem;">
+            <i class="fa-solid fa-triangle-exclamation" style="color: #f59e0b; font-size: 1.25rem;"></i>
+            <p><strong>Medical Disclaimer:</strong> This software is designed for predictive risk analysis only and is
+                not 100% perfect. Because an elevated risk was detected, <strong>we strongly advise you to consult a
+                    doctor or a certified healthcare provider</strong> for a professional medical evaluation.</p>
+        </div>
+        {% else %}
+        <div class="alert-info"
+            style="margin-top: 1.5rem; background-color: rgba(16, 185, 129, 0.1); border-color: #10b981; color: var(--text-heading); font-size: 0.85rem;">
+            <i class="fa-solid fa-circle-info" style="color: #10b981; font-size: 1.25rem;"></i>
+            <p><strong>Health Advice:</strong> This software is designed for predictive risk analysis only and is not
+                100% perfect. While your risk currently appears low, continue maintaining a healthy lifestyle with
+                regular exercise and a balanced diet. Consult a doctor for routine checkups.</p>
+        </div>
+        {% endif %}
+
+        <button onclick="window.print()" class="btn-secondary d-print-none"
+            style="width: 100%; margin-top: 1rem; padding: 0.75rem;">
+            <i class="fa-solid fa-print"></i> Download / Print Report
+        </button>
+        {% endif %}
+
+        {% elif not error %}
+        <div
+            style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 250px; color: var(--text-muted);">
+            <i class="fa-solid fa-clipboard-list" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+            <p>Awaiting inputs...</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

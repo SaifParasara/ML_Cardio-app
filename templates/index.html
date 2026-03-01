@@ -1,0 +1,188 @@
+{% extends "layout.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<style>
+    .hero {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 4rem 0;
+        gap: 3rem;
+    }
+
+    .hero-content {
+        flex: 1;
+        max-width: 600px;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        line-height: 1.15;
+        margin-bottom: 1.5rem;
+        color: var(--text-heading);
+    }
+
+    .hero-title span {
+        color: var(--primary);
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+        margin-bottom: 2rem;
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .hero-image-block {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        position: relative;
+    }
+
+    .stat-card {
+        padding: 3rem;
+        text-align: center;
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .stat-card i {
+        font-size: 3.5rem;
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+    }
+
+    .stat-val {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--text-heading);
+    }
+
+    .stat-label {
+        font-size: 1rem;
+        color: var(--text-muted);
+        margin-top: 0.5rem;
+    }
+
+    .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+    }
+
+    .feature-item {
+        padding: 2rem;
+    }
+
+    .feature-icon-wrapper {
+        width: 50px;
+        height: 50px;
+        background-color: var(--bg-light);
+        color: var(--primary);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .feature-item h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .feature-item p {
+        color: var(--text-muted);
+        line-height: 1.5;
+        font-size: 0.95rem;
+    }
+
+    @media (max-width: 900px) {
+        .hero {
+            flex-direction: column;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .hero-actions {
+            justify-content: center;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .feature-icon-wrapper {
+            margin: 0 auto 1.25rem auto;
+        }
+    }
+</style>
+
+<div class="hero">
+    <div class="hero-content animate-up" style="animation-delay: 0.1s;">
+        <h1 class="hero-title">Predictive Intelligence for <span>Heart Health</span></h1>
+        <p class="hero-subtitle">
+            A clinical decision support system utilizing Gradient Boosting machine learning models to assess
+            cardiovascular risk factors. Provide patient data to generate an immediate inference report.
+        </p>
+        <div class="hero-actions">
+            <a href="{{ url_for('predict_page') }}" class="btn-primary">
+                Run Assessment <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <a href="{{ url_for('about') }}" class="btn-secondary">
+                Model Documentation
+            </a>
+        </div>
+    </div>
+
+    <div class="hero-image-block animate-up" style="animation-delay: 0.3s;">
+        <div class="card stat-card">
+            <i class="fa-solid fa-stethoscope"></i>
+            <div class="stat-val">~74%</div>
+            <div class="stat-label">Diagnostic Accuracy</div>
+            <p style="margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-muted);">Trained via Gradient Boosting
+                Ensembles</p>
+        </div>
+    </div>
+</div>
+
+<div class="features animate-up" style="animation-delay: 0.5s;">
+    <div class="card feature-item">
+        <div class="feature-icon-wrapper">
+            <i class="fa-solid fa-layer-group"></i>
+        </div>
+        <h3>Advanced Ensembling</h3>
+        <p>Utilizes Gradient Boosting techniques to systematically minimize predictive error margins, outperforming
+            traditional decision trees across complex datasets.</p>
+    </div>
+    <div class="card feature-item">
+        <div class="feature-icon-wrapper">
+            <i class="fa-solid fa-clipboard-list"></i>
+        </div>
+        <h3>14-Feature Profiling</h3>
+        <p>Evaluates a distinct combination of physiological metrics and lifestyle markers, ranging from blood pressure
+            bounds to granular activity indicators.</p>
+    </div>
+    <div class="card feature-item">
+        <div class="feature-icon-wrapper">
+            <i class="fa-solid fa-bolt"></i>
+        </div>
+        <h3>Real-time Inference</h3>
+        <p>All inputs are standardized dynamically using a pre-fitted scaler before being processed through the
+            algorithm stack in milliseconds.</p>
+    </div>
+</div>
+{% endblock %}
