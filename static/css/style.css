@@ -108,8 +108,14 @@ h6 {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 1.5rem;
     width: 100%;
+}
+
+/* Accessibility */
+:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
 }
 
 /* Navbar */
@@ -138,6 +144,7 @@ h6 {
     font-size: 1.5rem;
     font-weight: 800;
     background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-decoration: none;
@@ -165,6 +172,7 @@ h6 {
     transition: var(--transition);
     padding: 0.5rem;
     position: relative;
+    border-radius: 4px;
 }
 
 .nav-link::after {
@@ -203,9 +211,27 @@ h6 {
     justify-content: center;
 }
 
-.theme-toggle:hover {
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
     background-color: rgba(139, 92, 246, 0.1);
     color: var(--primary);
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.mobile-menu-btn:focus-visible {
+    outline: 2px solid var(--primary);
 }
 
 /* Buttons */
@@ -310,6 +336,16 @@ footer {
     box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
 }
 
+/* Validation Styling */
+.form-control:invalid:not(:placeholder-shown) {
+    border-color: var(--danger-border);
+    box-shadow: 0 0 0 1px var(--danger-border);
+}
+
+.form-control:invalid:not(:placeholder-shown)+small {
+    color: var(--danger-text) !important;
+}
+
 /* Checkboxes */
 .checkbox-wrapper {
     display: flex;
@@ -318,7 +354,8 @@ footer {
     margin-bottom: 1rem;
 }
 
-.checkbox-wrapper input[type="checkbox"] {
+.checkbox-wrapper input[type="checkbox"],
+.checkbox-wrapper input[type="radio"] {
     width: 1.25rem;
     height: 1.25rem;
     accent-color: var(--primary);
@@ -363,10 +400,59 @@ footer {
     }
 }
 
-/* Responsive Navbar */
-@media (max-width: 768px) {
+/* Responsive Navbar & Content */
+@media (max-width: 850px) {
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
     .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--bg-card);
+        padding: 1.5rem;
+        gap: 1.5rem;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        transform: translateY(-10px);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        align-items: center;
+        z-index: 40;
+    }
+
+    .nav-links.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .nav-link {
+        width: 100%;
+        display: block;
+    }
+
+    .nav-link::after {
         display: none;
+    }
+
+    .nav-link.active,
+    .nav-link:hover {
+        background-color: rgba(139, 92, 246, 0.05);
+        color: var(--primary);
+        padding-left: 1rem;
+    }
+
+    .btn-primary {
+        width: 100%;
+        margin-left: 0 !important;
     }
 }
 
@@ -404,8 +490,8 @@ footer {
 
     .result-alert,
     .alert-info {
+        print-color-adjust: exact;
         -webkit-print-color-adjust: exact;
-        color-adjust: exact;
     }
 }
 

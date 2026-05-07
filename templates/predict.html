@@ -146,40 +146,59 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="age">Age</label>
-                    <input type="number" id="age" name="age" class="form-control" required placeholder="E.g. 35">
+                    <input type="number" id="age" name="age" class="form-control" required placeholder="E.g. 35" min="1"
+                        max="120"
+                        oninput="if(this.value && this.value > 120) this.value = 120; if(this.value && this.value < 1 && this.value.length > 0) this.value = 1;">
                     <small
-                        style="color:var(--text-muted); font-size: 0.8rem; margin-top: 4px; display:inline-block;"></small>
+                        style="color:var(--text-muted); font-size: 0.8rem; margin-top: 4px; display:inline-block;">Accepts
+                        1 to 120 years.</small>
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="gender">Gender</label>
-                    <select id="gender" name="gender" class="form-select" required>
-                        <option value="2">Male </option>
-                        <option value="1">Female </option>
-
-                    </select>
+                    <label class="form-label">Gender</label>
+                    <div style="display: flex; gap: 1.5rem; align-items: center; padding-top: 0.5rem; height: 100%;">
+                        <div class="checkbox-wrapper" style="margin-bottom: 0;">
+                            <input type="radio" id="gender_male" name="gender" value="2" required checked>
+                            <label for="gender_male">Male</label>
+                        </div>
+                        <div class="checkbox-wrapper" style="margin-bottom: 0;">
+                            <input type="radio" id="gender_female" name="gender" value="1" required>
+                            <label for="gender_female">Female</label>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <h3 class="section-title" style="margin-top: 1.5rem;"><i class="fa-solid fa-file-medical"></i> Vitals & Lab
+            <h3 class="section-title" style="margin-top: 1.5rem;"><i class="fa-solid fa-file-medical"></i>
+                Vitals & Lab
                 Results</h3>
             <div class="input-grid">
                 <div class="form-group">
                     <label class="form-label" for="height">Height (cm)</label>
                     <input type="number" id="height" name="height" class="form-control" required placeholder="170"
-                        step="0.1">
+                        step="0.1" min="50" max="250" oninput="if(this.value && this.value > 250) this.value = 250;">
+                    <small style="color:var(--text-muted); font-size: 0.75rem; margin-top: 4px; display:block;">Normal:
+                        150-180 cm</small>
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="weight">Weight (kg)</label>
                     <input type="number" id="weight" name="weight" class="form-control" required placeholder="70"
-                        step="0.1">
+                        step="0.1" min="10" max="300" oninput="if(this.value && this.value > 300) this.value = 300;">
+                    <small style="color:var(--text-muted); font-size: 0.75rem; margin-top: 4px; display:block;">Normal:
+                        50-90 kg</small>
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="ap_hi">Systolic BP</label>
-                    <input type="number" id="ap_hi" name="ap_hi" class="form-control" required placeholder="120">
+                    <label class="form-label" for="ap_hi">Systolic BP (Upper)</label>
+                    <input type="number" id="ap_hi" name="ap_hi" class="form-control" required placeholder="120"
+                        min="60" max="250" oninput="if(this.value && this.value > 250) this.value = 250;">
+                    <small style="color:var(--text-muted); font-size: 0.75rem; margin-top: 4px; display:block;">Healthy
+                        < 120</small>
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="ap_lo">Diastolic BP</label>
-                    <input type="number" id="ap_lo" name="ap_lo" class="form-control" required placeholder="80">
+                    <label class="form-label" for="ap_lo">Diastolic BP (Lower)</label>
+                    <input type="number" id="ap_lo" name="ap_lo" class="form-control" required placeholder="80" min="30"
+                        max="150" oninput="if(this.value && this.value > 150) this.value = 150;">
+                    <small style="color:var(--text-muted); font-size: 0.75rem; margin-top: 4px; display:block;">Healthy
+                        < 80</small>
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="chol">Cholesterol Level</label>
@@ -199,7 +218,8 @@
                 </div>
             </div>
 
-            <h3 class="section-title" style="margin-top: 1.5rem;"><i class="fa-solid fa-person-running"></i> Lifestyle
+            <h3 class="section-title" style="margin-top: 1.5rem;"><i class="fa-solid fa-person-running"></i>
+                Lifestyle
                 Factors</h3>
             <div class="form-group">
                 <div class="lifestyle-grid">
@@ -218,10 +238,15 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn-primary"
-                style="width: 100%; padding: 1rem; font-size: 1.05rem; margin-top: 1rem;">
-                <i class="fa-solid fa-microchip"></i> Run Prediction Model
-            </button>
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                <button type="submit" class="btn-primary" style="flex: 2; padding: 1rem; font-size: 1.05rem;">
+                    <i class="fa-solid fa-microchip"></i> Run Prediction Model
+                </button>
+                <button type="reset" class="btn-secondary" style="flex: 1; padding: 1rem; font-size: 1rem;"
+                    title="Clear Form Data">
+                    <i class="fa-solid fa-eraser"></i> Clear
+                </button>
+            </div>
         </form>
     </div>
 

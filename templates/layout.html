@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Cardio AI | {% block title %}{% endblock %}</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +15,7 @@
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=1.2">
 </head>
 
 <body>
@@ -21,7 +24,13 @@
             <a href="{{ url_for('home') }}" class="nav-brand">
                 <i class="fa-solid fa-heart-pulse"></i> Cardio AI
             </a>
-            <div class="nav-links">
+
+            <!-- Mobile Toggle Button -->
+            <button class="mobile-menu-btn" aria-label="Toggle Menu" id="mobileMenuBtn">
+                <span>Menu</span> <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="nav-links" id="navLinks">
                 <a href="{{ url_for('home') }}"
                     class="nav-link {% if request.endpoint == 'home' %}active{% endif %}">Home</a>
                 <a href="{{ url_for('about') }}"
@@ -68,11 +77,11 @@
     </div>
 
     <footer class="animate-up" style="animation-delay: 0.1s;">
-        <p>&copy; 2024 Cardio AI Platform | Clinical Neural Decision System</p>
+        <p>&copy; 2024 Cardio AI Platform | Clinical Neural Decision System |By Saif Parasara</p>
     </footer>
 
     <!-- Scripts -->
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}?v=1.1"></script>
     <script>
         // Inline script to prevent theme flashing on load
         (function () {
